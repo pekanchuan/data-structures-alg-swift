@@ -7,21 +7,17 @@
 
 import Foundation
 
-enum LinkedLists {}
-
-extension LinkedLists {
-    public class Node<Value> {
-        public var value: Value
-        public var next: Node?
-        
-        public init(value: Value, next: Node? = nil) {
-            self.value = value
-            self.next = next
-        }
+public class Node<Value> {
+    public var value: Value
+    public var next: Node?
+    
+    public init(value: Value, next: Node? = nil) {
+        self.value = value
+        self.next = next
     }
 }
 
-extension LinkedLists.Node: CustomStringConvertible {
+extension Node: CustomStringConvertible {
     public var description: String {
         guard let next else {
             return "\(value)"
