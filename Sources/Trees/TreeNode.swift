@@ -33,6 +33,34 @@ extension TreeNode {
     }
 }
 
+//  MARK: - Level-order traversal
+
+extension TreeNode {
+    public func forEachLevelOrder(visit: (TreeNode) -> Void) {
+        visit(self)
+        var queue = QueueStack<TreeNode>()
+        children.forEach { queue.enqueue($0) }
+        while let node = queue.dequeue() {
+            visit(node)
+            node.children.forEach { queue.enqueue($0) }
+        }
+    }
+}
+
+//  MARK: - Search
+
+extension TreeNode where T: Equatable {
+    public func search(_ value: T) -> TreeNode? {
+        var result: TreeNode?
+        forEachLevelOrder { node in
+            if node.value == value {
+                result = node
+            }
+        }
+        return result
+    }
+}
+
 
 func makeBeverageTree() -> TreeNode<String> {
     let tree = TreeNode("Beverages")
