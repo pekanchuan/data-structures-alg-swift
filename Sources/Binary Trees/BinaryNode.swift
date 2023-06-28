@@ -65,3 +65,27 @@ extension BinaryNode {
         visit(value)
     }
 }
+
+extension BinaryNode where Element: Comparable {
+    
+    var isBinarySearchTree: Bool {
+        isBST(self, min: nil, max: nil)
+    }
+    
+    private func isBST(_ tree: BinaryNode<Element>?, min: Element?, max: Element?) -> Bool {
+
+        guard let tree else {
+            return true
+        }
+        
+        if let min, tree.value <= min {
+            return false
+        } else if let max, tree.value > max {
+            return false
+        }
+        
+        let left = isBST(tree.leftChild, min: min, max: tree.value)
+        let right = isBST(tree.rightChild, min: tree.value, max: max)
+        return left && right
+    }
+}
