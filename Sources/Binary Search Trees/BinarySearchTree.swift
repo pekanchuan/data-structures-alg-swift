@@ -98,3 +98,35 @@ extension BinarySearchTree {
         return node
     }
 }
+
+extension BinarySearchTree: Equatable {
+    public static func == (lhs: BinarySearchTree, rhs: BinarySearchTree) -> Bool {
+        isEqual(lhs.root, rhs.root)
+    }
+    
+    private static func isEqual<Element: Equatable>(_ node1: BinaryNode<Element>?, _ node2: BinaryNode<Element>?) -> Bool {
+        guard let leftNode = node1, let rightNode = node2 else {
+            return node1 == nil && node2 == nil
+        }
+        
+        return leftNode.value == rightNode.value &&
+        isEqual(leftNode.leftChild, rightNode.leftChild) &&
+        isEqual(leftNode.rightChild, rightNode.rightChild)
+    }
+}
+
+extension BinarySearchTree where Element: Hashable {
+    public func contains(_ subtree: BinarySearchTree) -> Bool {
+        var set: Set<Element> = []
+        root?.traverseInOrder {
+            set.insert($0)
+        }
+        
+        var isEqual = true
+        
+        subtree.root?.traverseInOrder {
+            isEqual = isEqual && set.contains($0)
+        }
+        return isEqual
+    }
+}
