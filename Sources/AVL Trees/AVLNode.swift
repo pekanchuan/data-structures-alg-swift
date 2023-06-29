@@ -7,6 +7,20 @@ public class AVLNode<Element> {
     public init(value: Element) {
         self.value = value
     }
+
+    public var height = 0
+
+    public var balanceFactor: Int {
+        leftHeight - rightHeight
+    }
+
+    public var leftHeight: Int {
+        leftChild?.height ?? -1
+    }
+
+    public var rightHeight: Int {
+        rightChild?.height ?? -1
+    }
 }
 
 extension AVLNode: CustomStringConvertible {
