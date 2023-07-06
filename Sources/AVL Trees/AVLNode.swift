@@ -1,5 +1,5 @@
 
-public class AVLNode<Element> {
+public final class AVLNode<Element> {
     public var value: Element
     public var leftChild: AVLNode?
     public var rightChild: AVLNode?
@@ -44,22 +44,22 @@ extension AVLNode: CustomStringConvertible {
     }
 }
 
-extension AVLNode {
-    public func traverseInOrder(visit: (Element) -> Void) {
-        leftChild?.traverseInOrder(visit: visit)
-        visit(value)
-        rightChild?.traverseInOrder(visit: visit)
-    }
+extension AVLNode: TraversableBinaryNode {
+    // public func traverseInOrder(visit: (Element) -> Void) {
+    //     leftChild?.traverseInOrder(visit: visit)
+    //     visit(value)
+    //     rightChild?.traverseInOrder(visit: visit)
+    // }
     
-    public func traversePreOrder(visit: (Element) -> Void) {
-        visit(value)
-        leftChild?.traversePreOrder(visit: visit)
-        rightChild?.traversePreOrder(visit: visit)
-    }
+    // public func traversePreOrder(visit: (Element) -> Void) {
+    //     visit(value)
+    //     leftChild?.traversePreOrder(visit: visit)
+    //     rightChild?.traversePreOrder(visit: visit)
+    // }
     
-    public func traversePostOrder(visit: (Element) -> Void) {
-        leftChild?.traversePostOrder(visit: visit)
-        rightChild?.traversePostOrder(visit: visit)
-        visit(value)
-    }
+    // public func traversePostOrder(visit: (Element) -> Void) {
+    //     leftChild?.traversePostOrder(visit: visit)
+    //     rightChild?.traversePostOrder(visit: visit)
+    //     visit(value)
+    // }
 }
