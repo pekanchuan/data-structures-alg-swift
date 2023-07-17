@@ -80,4 +80,38 @@ struct Heap<Element: Equatable> {
             parent = parentIndex(ofChildAt: child)
         }
     }
+
+    mutating func remove(at index: Int) -> Element? {
+        guard index < elements.count else { return nil }
+
+        if index == elements.count - 1 {
+            return elements.removeLast()
+        } else {
+            elements.swapAt(index, elements.count - 1)
+            defer {
+                siftDown(from: index)
+                siftUp(from: index)
+            }
+            return elements.removeLast()
+        }
+    }
+
+    func index(of element: Element, startingAt i: Int) -> Int? {
+        if i >= count {
+            return nil
+        }
+        if sort(element, elements[i]) {
+            return nil
+        }
+        if element == elements[i] {
+            return i
+        }
+        if let j = index(of: element, startingAt: leftChildIndex(ofParentAt: i)) {
+            return j
+        }
+        if let j = index(of: element, startingAt: rightChildIndex(ofParentAt: i)) {
+            return j
+        }
+        return nil
+    }
 }
