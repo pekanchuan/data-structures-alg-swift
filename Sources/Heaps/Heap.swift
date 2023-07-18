@@ -3,8 +3,15 @@ struct Heap<Element: Equatable> {
     var elements: [Element] = []
     let sort: (Element, Element) -> Bool
 
-    init(sort: @escaping (Element, Element) -> Bool) {
+    init(sort: @escaping (Element, Element) -> Bool, elements: [Element] = []) {
         self.sort = sort
+        self.elements = elements
+
+        if !elements.isEmpty {
+            for i in stride(from: elements.count / 2 - 1, through: 0, by: -1) {
+                siftDown(from: i)
+            }
+        }
     }
 
     var isEmpty: Bool {
@@ -113,5 +120,21 @@ struct Heap<Element: Equatable> {
             return j
         }
         return nil
+    }
+    
+    func isMinHeap<Element: Comparable>(elements: [Element]) -> Bool {
+        guard !elements.isEmpty else { return true }
+        
+        for i in stride(from: elements.count / 2 - 1, through: 0, by: -1) {
+            let left = leftChildIndex(ofParentAt: i)
+            let right = rightChildIndex(ofParentAt: i)
+            if elements[left] < elements[i] {
+                return false
+            }
+            if right < elements.count && elements[right] < elements[i] {
+                return false
+            }
+        }
+        return true
     }
 }
